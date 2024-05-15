@@ -3,3 +3,57 @@
     padding: 0;
     box-sizing: border-box;
 }
+.createPostPage{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cpContainer{
+    width: 40%;
+    height: auto;
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: white;
+    background-color: black;
+    overflow: visible;
+}
+.cpContainer h1{
+    color: white;
+    text-align: center;
+}
+.cpContainer label{
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+}
+.cpContainer .inputGp{
+    display: flex;
+    flex-direction: column;
+}
+.cpContainer .inputGp input, .cpContainer .inputGp textarea{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+}
+.cpContainer button{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.cpContainer button:hover{
+    background-color: grey;
+    color: white;
+}
