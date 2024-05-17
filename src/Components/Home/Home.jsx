@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { db } from '../../Firebase'; 
 import deleteBtn from '../Assets/trash-can.png';
 
