@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import { getDocs, collection, deleteDoc } from 'firebase/firestore';
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../Firebase'; 
 import deleteBtn from '../Assets/trash-can.png';
 
-const postsCollectionRef = collection(db, "posts"); // Move outside the component
+const postsCollectionRef = collection(db, "posts");
 
 const Home = () => {
   const [postsLists, setPostsLists] = useState([]);
@@ -23,21 +23,25 @@ const Home = () => {
     getPosts(); 
   }, []); // Empty dependency array
 
-  const deletePost = async () => {
-    await deleteDoc()
-  }
+  const deletePost = async (id) => { // Accept id as parameter
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+
+    // Remove the post from the state to update the UI
+    setPostsLists((prevPosts) => prevPosts.filter(post => post.id !== id));
+  };
 
   return (
     <div className="homePage">
       {postsLists.map((post) => (
-        <div key={post.id} className="post"> {/* Add a unique key */}
+        <div key={post.id} className="post">
           <div className="postHeader">
             <div className="title">
               <h1>{post.title}</h1> 
             </div> 
             <div className="deletePost">
-              <button><img src={deleteBtn} alt="Delete" /></button>
-            </div>
+              <button onClick={() => deletePost(post.id)}><img src={deleteBtn} alt="Delete" /></button>
+            </div> 
           </div>
 
           <div className="postTextContainer">
