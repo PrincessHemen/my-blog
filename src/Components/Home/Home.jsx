@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../Firebase'; 
+import deleteBtn from '../Assets/trash-can.png';
 
 const postsCollectionRef = collection(db, "posts"); // Move outside the component
 
@@ -22,6 +23,10 @@ const Home = () => {
     getPosts(); 
   }, []); // Empty dependency array
 
+  const deletePost = async () => {
+    await deleteDoc()
+  }
+
   return (
     <div className="homePage">
       {postsLists.map((post) => (
@@ -30,6 +35,9 @@ const Home = () => {
             <div className="title">
               <h1>{post.title}</h1> 
             </div> 
+            <div className="deletePost">
+              <button><img src={deleteBtn} alt="Delete" /></button>
+            </div>
           </div>
 
           <div className="postTextContainer">

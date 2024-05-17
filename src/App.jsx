@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Link, Routes, Route, useNavigate, Navigate } from 'react-router-dom'; // Import Navigate
+import { Link, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import Home from './Components/Home/Home';
 import CreatePost from './Components/CreatePost/CreatePost';
@@ -59,35 +59,43 @@ function App() {
   };
 
   return (
-    <>
+    <div className='rootComponent'>
       <nav>
         <Link to='/'>Home</Link>
-        <Link to='/login'>Login</Link>
-        {isLoggedIn && <Link to='/create'>Create Post</Link>}
+        {isLoggedIn ? (
+          <>
+            <Link to='/create'>Create Post</Link>
+            <button onClick={handleSignOut} className="navButton">Logout</button>
+          </>
+        ) : (
+          <Link to='/login'>Login</Link>
+        )}
       </nav>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route
-          path='/login'
-          element={
-            <Login
-              isLoggedIn={isLoggedIn}
-              handleSignIn={handleSignIn}
-              handleSignOut={handleSignOut}
-              name={name}
-              email={email}
-              profilePic={profilePic}
-            />
-          }
-        />
-        <Route
-          path='/create'
-          element={
-            isLoggedIn ? <CreatePost /> : <Navigate to='/login' />
-          }
-        />
-      </Routes>
-    </>
+      <div className="content">
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route
+            path='/login'
+            element={
+              <Login
+                isLoggedIn={isLoggedIn}
+                handleSignIn={handleSignIn}
+                handleSignOut={handleSignOut}
+                name={name}
+                email={email}
+                profilePic={profilePic}
+              />
+            }
+          />
+          <Route
+            path='/create'
+            element={
+              isLoggedIn ? <CreatePost /> : <Navigate to='/login' />
+            }
+          />
+        </Routes>
+      </div>
+    </div>
   );
 }
 
