@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Home.css';
+import './Login.css';
 import { getDocs, collection, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase'; 
 import deleteBtn from '../Assets/trash-can.png';
