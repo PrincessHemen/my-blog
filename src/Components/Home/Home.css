@@ -64,6 +64,28 @@
   display: flex;
   flex-direction: column;
 }
+.editPostContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.editPostContainer textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 10px;
+}
+
+.postActions {
+  display: flex;
+  flex-direction: row;
+}
+.postActions button img{
+  width: 20px;
+  height: 20px;
+}
+
 
 /* Media Query for smaller screens */
 @media (max-width: 768px) {

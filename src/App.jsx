@@ -73,7 +73,7 @@ function App() {
       </nav>
       <div className="content">
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home userEmail={email} />} /> {/* Pass email as prop */}
           <Route
             path='/login'
             element={
