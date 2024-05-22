@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import { browserSessionPersistence, setPersistence } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -69,4 +69,8 @@ export const signOutUser = () => {
       console.error("Error signing out:", error);
       alert("Error signing out");
     });
+};
+
+export const monitorAuthState = (callback) => {
+  onAuthStateChanged(auth, callback);
 };

@@ -4,7 +4,7 @@ import { Link, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import Home from './Components/Home/Home';
 import CreatePost from './Components/CreatePost/CreatePost';
-import { signInWithGoogle, signOutUser } from './Firebase';
+import { signInWithGoogle, signOutUser, monitorAuthState } from './Firebase';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,29 +14,33 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const name = localStorage.getItem('name');
-    const email = localStorage.getItem('email');
-    const profilePic = localStorage.getItem('profilePic');
+    const unsubscribe = monitorAuthState((user) => {
+      if (user) {
+        const { displayName, email, photoURL } = user;
+        setIsLoggedIn(true);
+        setName(displayName);
+        setEmail(email);
+        setProfilePic(photoURL);
+        localStorage.setItem('name', displayName);
+        localStorage.setItem('email', email);
+        localStorage.setItem('profilePic', photoURL);
+      } else {
+        setIsLoggedIn(false);
+        setName('');
+        setEmail('');
+        setProfilePic('');
+        localStorage.removeItem('name');
+        localStorage.removeItem('email');
+        localStorage.removeItem('profilePic');
+      }
+    });
 
-    if (name && email && profilePic) {
-      setIsLoggedIn(true);
-      setName(name);
-      setEmail(email);
-      setProfilePic(profilePic);
-    }
+    return () => unsubscribe();
   }, []);
 
   const handleSignIn = () => {
-    return signInWithGoogle()
+    signInWithGoogle()
       .then(() => {
-        const name = localStorage.getItem('name');
-        const email = localStorage.getItem('email');
-        const profilePic = localStorage.getItem('profilePic');
-
-        setIsLoggedIn(true);
-        setName(name);
-        setEmail(email);
-        setProfilePic(profilePic);
         navigate('/'); // Redirect to Home after successful sign-in
       })
       .catch((error) => {
@@ -45,12 +49,8 @@ function App() {
   };
 
   const handleSignOut = () => {
-    return signOutUser()
+    signOutUser()
       .then(() => {
-        setIsLoggedIn(false);
-        setName('');
-        setEmail('');
-        setProfilePic('');
         navigate('/login'); // Redirect to Login after successful sign-out
       })
       .catch((error) => {
